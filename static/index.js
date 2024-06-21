@@ -122,6 +122,8 @@ function makeColumnsResizable() {
 
 function setupColumnToggle() {
     const cols = document.querySelectorAll('.data th');
+    const hiddenColumnsList = document.getElementById('hiddenColumnsList');
+
     cols.forEach(col => {
         const toggleButton = document.createElement('button');
         toggleButton.className = 'toggle-button';
@@ -129,10 +131,27 @@ function setupColumnToggle() {
         toggleButton.addEventListener('click', () => {
             const colIndex = Array.from(col.parentElement.children).indexOf(col);
             const rows = document.querySelectorAll('.data tr');
+            const hiddenColumnItem = document.createElement('li');
+            hiddenColumnItem.textContent = col.textContent;
+            hiddenColumnItem.addEventListener('click', () => {
+                rows.forEach(row => {
+                    row.children[colIndex].classList.remove('hidden');
+                });
+                hiddenColumnItem.remove();
+                toggleButton.textContent = '-';
+            });
+
             rows.forEach(row => {
                 row.children[colIndex].classList.toggle('hidden');
             });
-            toggleButton.textContent = toggleButton.textContent === '-' ? '+' : '-';
+
+            if (toggleButton.textContent === '-') {
+                hiddenColumnsList.appendChild(hiddenColumnItem);
+                toggleButton.textContent = '+';
+            } else {
+                hiddenColumnItem.remove();
+                toggleButton.textContent = '-';
+            }
         });
         col.appendChild(toggleButton);
     });
