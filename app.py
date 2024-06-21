@@ -21,7 +21,6 @@ def search():
     queries = request.form.getlist('query')
     columns = request.form.getlist('column')
     operators = request.form.getlist('operator')
-    global_operator = request.form.get('global_operator')
 
     if not queries or not columns or len(queries) != len(columns):
         return "No search terms provided or mismatched queries and columns", 400
@@ -32,7 +31,7 @@ def search():
         conditions.append(f"{columns[i]} LIKE ?")
         params.append(f"%{queries[i]}%")
 
-    condition_str = f" {global_operator} ".join(conditions)
+    condition_str = ' AND '.join([f"({c})" for c in conditions])
 
     conn = get_db_connection()
     try:

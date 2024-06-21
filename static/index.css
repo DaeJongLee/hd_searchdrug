@@ -1,0 +1,107 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-bar select, .search-bar input[type="text"] {
+    margin-right: 10px;
+    padding: 10px;
+}
+
+.search-bar .search-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.results {
+    margin-top: 20px;
+}
+
+table.data {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.data th, table.data td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    position: relative;
+}
+
+table.data th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.condition {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.condition select, .condition input {
+    margin-right: 10px;
+}
+
+.highlight {
+    background-color: yellow;
+}
+
+.resizer {
+    width: 5px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: col-resize;
+    user-select: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.toggle-button {
+    margin-left: 5px;
+    padding: 2px 5px;
+    cursor: pointer;
+}
