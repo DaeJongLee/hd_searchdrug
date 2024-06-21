@@ -1,7 +1,7 @@
 let lastQuery = '';
 
 function addCondition() {
-    var conditionDiv = document.createElement('div');
+    const conditionDiv = document.createElement('div');
     conditionDiv.className = 'condition';
     conditionDiv.innerHTML = `
         <select name="column">
@@ -29,7 +29,7 @@ function addCondition() {
 }
 
 function removeCondition(button) {
-    var conditionDiv = button.parentElement;
+    const conditionDiv = button.parentElement;
     document.getElementById('conditions').removeChild(conditionDiv);
     updateSidebar();
 }
@@ -44,9 +44,10 @@ function updateSidebar() {
     const sidebar = document.getElementById('sidebarConditions');
     sidebar.innerHTML = '';
     for (let i = 0; i < conditions.length; i++) {
-        const conditionText = conditions[i].querySelector('select[name="column"]').value + ' ' +
-            conditions[i].querySelector('select[name="operator"]').value + ' ' +
-            conditions[i].querySelector('input[name="query"]').value;
+        const column = conditions[i].querySelector('select[name="column"]').value;
+        const operator = conditions[i].querySelector('select[name="operator"]').value;
+        const query = conditions[i].querySelector('input[name="query"]').value;
+        const conditionText = `${column} ${operator} ${query}`;
         const button = document.createElement('button');
         button.textContent = conditionText;
         sidebar.appendChild(button);
@@ -69,22 +70,25 @@ function submitSearch(event) {
     })
     .then(response => response.text())
     .then(html => {
-        highlightSearchTerms(html, params.getAll('query'));
+        document.getElementById('results').innerHTML = html;
+        highlightSearchTerms(params.getAll('query'));
         makeColumnsResizable();
         setupColumnToggle();
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+        alert('검색 중 오류가 발생했습니다.');
+    });
 }
 
-function highlightSearchTerms(html, terms) {
+function highlightSearchTerms(terms) {
+    const resultsDiv = document.getElementById('results');
     terms.forEach(term => {
         const regex = new RegExp(`(${term})`, 'gi');
-        html = html.replace(regex, '<span class="highlight">$1</span>');
+        resultsDiv.innerHTML = resultsDiv.innerHTML.replace(regex, '<span class="highlight">$1</span>');
     });
-    document.getElementById('results').innerHTML = html;
 }
 
-// Column resize functionality
 function makeColumnsResizable() {
     const table = document.querySelector('.data');
     if (!table) return;

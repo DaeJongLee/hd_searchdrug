@@ -25,16 +25,24 @@ def search():
     if not queries or not columns or len(queries) != len(columns):
         return "No search terms provided or mismatched queries and columns", 400
 
+    # 검색 조건 생성
     conditions = []
     params = []
     for i in range(len(queries)):
-        conditions.append(f"{columns[i]} LIKE ?")
+        condition = f"{columns[i]} LIKE ?"
+        conditions.append(condition)
         params.append(f"%{queries[i]}%")
 
-    condition_str = ' AND '.join([f"({c})" for c in conditions])
+        # 마지막 조건이 아니면 AND 또는 OR 연산자를 추가
+        if i < len(queries) - 1:
+            conditions.append(operators[i])
+
+    # SQL 쿼리 조건 문자열 생성
+    condition_str = ' '.join(conditions)
 
     conn = get_db_connection()
     try:
+        # SQL 쿼리 실행
         df = pd.read_sql_query(f"SELECT * FROM drug_info WHERE {condition_str}", conn, params=params)
         if not df.empty:
             results = df.to_html(classes='data')
