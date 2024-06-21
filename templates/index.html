@@ -10,43 +10,16 @@
             <button onclick="addCondition()">검색조건 추가</button>
             <div id="sidebarConditions"></div>
             <button onclick="clearConditions()">비우기</button>
-            <div id="hiddenColumnsContainer" class="hidden-columns-container">
-                <h3>숨겨진 항목</h3>
-                <ul id="hiddenColumnsList"></ul>
-            </div>
         </div>
         <div class="content">
             <h1>의약품 검색기</h1>
             <form id="searchForm" class="search-bar" onsubmit="submitSearch(event)">
-                <div id="conditions">
-                    <div class="condition">
-                        <select name="column">
-                            <option value="업체명">업체명</option>
-                            <option value="제품명">제품명</option>
-                            <option value="주성분">주성분</option>
-                            <option value="첨가제">첨가제</option>
-                            <option value="허가일">허가일</option>
-                            <option value="제조/수입">제조/수입</option>
-                            <option value="모양">모양</option>
-                            <option value="장축">장축</option>
-                            <option value="단축">단축</option>
-                            <option value="수입제조국">수입제조국</option>
-                            <option value="주성분영문">주성분영문</option>
-                        </select>
-                        <input type="text" name="query" placeholder="Enter search term">
-                        <select name="operator">
-                            <option value="AND">AND</option>
-                            <option value="OR">OR</option>
-                        </select>
-                        <button type="button" onclick="addCondition()">+</button>
-                    </div>
-                </div>
+                <div id="conditions"></div>
                 <input type="submit" value="Search" class="search-button">
             </form>
             <div id="results" class="results"></div>
         </div>
     </div>
     <script src="{{ url_for('static', filename='index.js') }}"></script>
-Leedaejong (hdpharm0601@gmail.com)
 </body>
 </html>

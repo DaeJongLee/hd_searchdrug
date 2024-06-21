@@ -25,17 +25,20 @@ def search():
     if not queries or not columns or len(queries) != len(columns):
         return "No search terms provided or mismatched queries and columns", 400
 
-    # 검색 조건 생성
     conditions = []
     params = []
+
     for i in range(len(queries)):
         condition = f"{columns[i]} LIKE ?"
         conditions.append(condition)
         params.append(f"%{queries[i]}%")
 
-        # 마지막 조건이 아니면 AND 또는 OR 연산자를 추가
+        # 다음 조건이 존재하면 AND 또는 OR 연산자를 추가
         if i < len(queries) - 1:
-            conditions.append(operators[i])
+            if i < len(operators):
+                conditions.append(operators[i])
+            else:
+                return "Mismatch between number of queries and operators", 400
 
     # SQL 쿼리 조건 문자열 생성
     condition_str = ' '.join(conditions)

@@ -5,10 +5,10 @@ function addCondition() {
     conditionDiv.className = 'condition';
     conditionDiv.innerHTML = `
         <select name="column">
-            <option value="업체명">업체명</option>
             <option value="제품명">제품명</option>
             <option value="주성분">주성분</option>
-            <option value="첨가제">첨가제</option>
+            <option value="업체명">업체명</option>
+            <option value="첨가제">첨가제</option>  
             <option value="허가일">허가일</option>
             <option value="제조/수입">제조/수입</option>
             <option value="모양">모양</option>
@@ -18,12 +18,43 @@ function addCondition() {
             <option value="주성분영문">주성분영문</option>
         </select>
         <input type="text" name="query" placeholder="Enter search term">
-        <select name="operator">
-            <option value="AND">AND</option>
-            <option value="OR">OR</option>
-        </select>
+        <button type="button" onclick="addConditionWithOperator(this, 'AND')">AND +</button>
+        <button type="button" onclick="addConditionWithOperator(this, 'OR')">OR +</button>
         <button type="button" onclick="removeCondition(this)">-</button>
     `;
+    document.getElementById('conditions').appendChild(conditionDiv);
+    updateSidebar();
+}
+
+function addConditionWithOperator(button, operator) {
+    const parentCondition = button.parentElement;
+    const operatorDiv = document.createElement('div');
+    operatorDiv.className = 'operator';
+    operatorDiv.innerHTML = `<input type="hidden" name="operator" value="${operator}"> ${operator}`;
+
+    const conditionDiv = document.createElement('div');
+    conditionDiv.className = 'condition';
+    conditionDiv.innerHTML = `
+        <select name="column">
+            <option value="제품명">제품명</option>
+            <option value="주성분">주성분</option>
+            <option value="업체명">업체명</option>
+            <option value="첨가제">첨가제</option>  
+            <option value="허가일">허가일</option>
+            <option value="제조/수입">제조/수입</option>
+            <option value="모양">모양</option>
+            <option value="장축">장축</option>
+            <option value="단축">단축</option>
+            <option value="수입제조국">수입제조국</option>
+            <option value="주성분영문">주성분영문</option>
+        </select>
+        <input type="text" name="query" placeholder="Enter search term">
+        <button type="button" onclick="addConditionWithOperator(this, 'AND')">AND +</button>
+        <button type="button" onclick="addConditionWithOperator(this, 'OR')">OR +</button>
+        <button type="button" onclick="removeCondition(this)">-</button>
+    `;
+
+    document.getElementById('conditions').appendChild(operatorDiv);
     document.getElementById('conditions').appendChild(conditionDiv);
     updateSidebar();
 }
@@ -44,13 +75,14 @@ function updateSidebar() {
     const sidebar = document.getElementById('sidebarConditions');
     sidebar.innerHTML = '';
     for (let i = 0; i < conditions.length; i++) {
-        const column = conditions[i].querySelector('select[name="column"]').value;
-        const operator = conditions[i].querySelector('select[name="operator"]').value;
-        const query = conditions[i].querySelector('input[name="query"]').value;
-        const conditionText = `${column} ${operator} ${query}`;
-        const button = document.createElement('button');
-        button.textContent = conditionText;
-        sidebar.appendChild(button);
+        const column = conditions[i].querySelector('select[name="column"]');
+        const query = conditions[i].querySelector('input[name="query"]');
+        if (column && query) {
+            const conditionText = `${column.value} ${query.value}`;
+            const button = document.createElement('button');
+            button.textContent = conditionText;
+            sidebar.appendChild(button);
+        }
     }
 }
 

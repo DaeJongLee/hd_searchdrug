@@ -56,22 +56,6 @@ body {
     margin-top: 20px;
 }
 
-table.data {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-table.data th, table.data td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    position: relative;
-}
-
-table.data th {
-    background-color: #f2f2f2;
-    text-align: left;
-}
-
 .condition {
     display: flex;
     align-items: center;
@@ -105,62 +89,3 @@ table.data th {
     padding: 2px 5px;
     cursor: pointer;
 }
-
-.hidden-columns-container {
-    margin-top: 20px;
-    background-color: #007BFF;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.hidden-columns-container h3 {
-    margin: 0;
-    margin-bottom: 10px;
-    font-size: 16px;
-}
-
-.hidden-columns-container ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.hidden-columns-container li {
-    cursor: pointer;
-    margin-bottom: 5px;
-}
-
-#hiddenColumnsContainer h3{
-    text-align:center;
-   }
-   
-   /* Search form */
-   #searchForm{
-    transform:translatex(-4px) translatey(-16px);
-   }
-   
-   /* Heading */
-   .container h1{
-    text-align:center;
-    text-transform:none;
-    font-style:normal;
-    text-shadow:rgb(255, 255, 255) 1px 1px 0px, rgb(170, 170, 170) 2px 2px 0px;
-   }
-   
-   /* Search button */
-   #searchForm .search-button{
-    width:158px;
-    transform:translatex(33px) translatey(-5px);
-   }
-   
-   /* Button */
-   .container .sidebar button{
-    font-size:19px;
-    word-spacing:1.2px;
-    column-count:1;
-    text-align:center;
-    line-height:29.1px;
-   }
-   
-   
