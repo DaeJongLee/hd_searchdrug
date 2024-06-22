@@ -1,0 +1,114 @@
+table.data {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 2px 15px rgba(64, 64, 64, 0.1);
+    background-color: #fff;
+    text-align: left;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    table-layout: fixed; /* 테이블 전체에 고정 레이아웃 적용 */
+}
+
+table.data th, table.data td {
+    padding: 12px 15px;
+}
+
+/* 특정 열의 크기를 auto로 조정 */
+table.data th:nth-child(1),
+table.data td:nth-child(1),
+table.data th:nth-child(2),
+table.data td:nth-child(2),
+table.data th:nth-child(3),
+table.data td:nth-child(3),
+table.data th:nth-child(6),
+table.data td:nth-child(6) {
+    width: auto;
+}
+
+table.data thead {
+    background-color: #007BFF;
+    color: #fff;
+    position: sticky;
+    top: 0;
+}
+
+table.data thead th {
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    border-bottom: 2px solid #ddd;
+    text-align: center;
+}
+
+table.data tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table.data tbody tr:hover {
+    background-color: #ddd;
+}
+
+table.data th .sort-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 0.8em;
+    padding: 2px;
+}
+
+table.data th div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.highlight {
+    background-color: yellow;
+}
+
+.resizer {
+    width: 5px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: col-resize;
+    user-select: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.toggle-button {
+    margin-left: 5px;
+    padding: 2px 5px;
+    cursor: pointer;
+}
+
+.highlight1 {
+    background-color: #FFFF00; /* 노란색 */
+}
+
+.highlight2 {
+    background-color: #FFA07A; /* 라이트 살몬 색 */
+}
+
+.highlight3 {
+    background-color: #90EE90; /* 라이트 그린 색 */
+}
+
+.highlight4 {
+    background-color: #ADD8E6; /* 라이트 블루 색 */
+}
+
+.highlight5 {
+    background-color: #FFB6C1; /* 라이트 핑크 색 */
+}
+
+.highlight6 {
+    background-color: #FFD700; /* 골드 색 */
+}

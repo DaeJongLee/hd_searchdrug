@@ -34,48 +34,36 @@ def search():
         conditions.append(condition)
         params.append(f"%{queries[i]}%")
 
-        # 다음 조건이 존재하면 AND 또는 OR 연산자를 추가
         if i < len(queries) - 1:
             if i < len(operators):
                 conditions.append(operators[i])
             else:
                 return "Mismatch between number of queries and operators", 400
 
-    # SQL 쿼리 조건 문자열 생성
     condition_str = ' '.join(conditions)
 
     conn = get_db_connection()
     try:
-        # SQL 쿼리 실행
-        query = f"""
-        SELECT 품목구분, 업체명, 제품명, 주성분, 첨가제, 상태 
-        FROM drug_info 
-        WHERE {condition_str}
-        """
-        df = pd.read_sql_query(query, conn, params=params)
+        df = pd.read_sql_query(f"SELECT 품목구분, 업체명, 제품명, 주성분, 첨가제, 상태 FROM drug_info WHERE {condition_str}", conn, params=params)
         if not df.empty:
-            # 데이터프레임을 HTML로 변환
             df_html = df.to_html(classes='data', index=False, escape=False)
-
-            # data-column 속성 추가
+            
             soup = BeautifulSoup(df_html, 'html.parser')
-            for idx, row in enumerate(soup.find_all('tr')):
-                if idx == 0:  # 헤더 행
-                    for th in row.find_all('th'):
-                        th['data-column'] = th.get_text()
-                else:  # 데이터 행
-                    for col_idx, td in enumerate(row.find_all('td')):
-                        td['data-column'] = df.columns[col_idx]
-            df_html = str(soup)
-
-            results = df_html
+            headers = [header.get_text() for header in soup.find_all('th')]
+            rows = soup.find_all('tr')[1:]
+            for row in rows:
+                cells = row.find_all('td')
+                for header, cell in zip(headers, cells):
+                    cell['data-column'] = header
+            
+            results = str(soup)
         else:
             results = "No results found."
     except Exception as e:
-        results = f"Error occurred: {e}"
+        results = str(e)
     finally:
         conn.close()
-
+    
     return results
 
 if __name__ == '__main__':

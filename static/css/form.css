@@ -1,0 +1,46 @@
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-bar select, .search-bar input[type="text"] {
+    margin-right: 10px;
+    padding: 10px;
+}
+
+.search-bar .search-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.condition {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.condition select, .condition input {
+    margin-right: 10px;
+}
+
+.operator {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.sidebar button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}

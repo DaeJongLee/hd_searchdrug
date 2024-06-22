@@ -1,0 +1,57 @@
+@import url('layout.css');
+@import url('form.css');
+@import url('table.css');
+
+#addConditionButton, #clearConditionsButton {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    background-color: #007BFF; /* 버튼 배경색 */
+    color: white; /* 버튼 텍스트 색상 */
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#addConditionButton:hover, #clearConditionsButton:hover {
+    background-color: #0056b3; /* 호버시 버튼 배경색 */
+}
+
+.highlight1 {
+    background-color: #FFFF00; /* 노란색 */
+}
+
+.highlight2 {
+    background-color: #FFA07A; /* 라이트 살몬 색 */
+}
+
+.highlight3 {
+    background-color: #90EE90; /* 라이트 그린 색 */
+}
+
+.highlight4 {
+    background-color: #ADD8E6; /* 라이트 블루 색 */
+}
+
+.highlight5 {
+    background-color: #FFB6C1; /* 라이트 핑크 색 */
+}
+
+.highlight6 {
+    background-color: #FFD700; /* 골드 색 */
+}
+
+.highlight-pink {
+    background-color: #FFC0CB !important; /* 분홍색 */
+}
+
+.highlight-grey {
+    background-color: #A9A9A9 !important; /* 짙은 회색 */
+    color: white !important; /* 하얀 글씨 */
+}
+
+.highlight-purple {
+    background-color: #800080 !important; /* 보라색 */
+}

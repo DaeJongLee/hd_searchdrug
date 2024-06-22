@@ -2,14 +2,14 @@
 <html>
 <head>
     <title>의약품 검색기</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 <body>
     <div class="container">
         <div class="sidebar">
-            <button onclick="addCondition()">검색조건 추가</button>
+            <div id="addConditionButton">검색조건 추가</div>
+            <div id="clearConditionsButton">비우기</div>
             <div id="sidebarConditions"></div>
-            <button onclick="clearConditions()">비우기</button>
         </div>
         <div class="content">
             <h1>의약품 검색기</h1>
@@ -20,6 +20,6 @@
             <div id="results" class="results"></div>
         </div>
     </div>
-    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
 </html>
