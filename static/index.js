@@ -61,7 +61,21 @@ function addConditionWithOperator(button, operator) {
 
 function removeCondition(button) {
     const conditionDiv = button.parentElement;
-    document.getElementById('conditions').removeChild(conditionDiv);
+    const conditionsContainer = document.getElementById('conditions');
+    
+    // Check if the conditionDiv has a previous sibling which is an operator
+    const previousSibling = conditionDiv.previousElementSibling;
+    const nextSibling = conditionDiv.nextElementSibling;
+    
+    // Remove the selected condition
+    conditionsContainer.removeChild(conditionDiv);
+    
+    // Remove the preceding operator if it exists and the next element is not a condition
+    if (previousSibling && previousSibling.className === 'operator' && (!nextSibling || nextSibling.className !== 'condition')) {
+        conditionsContainer.removeChild(previousSibling);
+    }
+
+    // Update the sidebar
     updateSidebar();
 }
 
@@ -192,7 +206,6 @@ function setupColumnToggle() {
         col.appendChild(toggleButton);
     });
 }
-
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('searchForm').addEventListener('submit', submitSearch);
     document.querySelectorAll('#searchForm input[type="text"]').forEach(input => {
