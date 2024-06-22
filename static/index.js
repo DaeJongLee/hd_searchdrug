@@ -1,21 +1,18 @@
 let lastQuery = '';
 
+const highlightColors = ['#FFFF00', '#FFA07A', '#90EE90', '#ADD8E6', '#FFB6C1', '#FFD700'];
+
 function addCondition() {
     const conditionDiv = document.createElement('div');
     conditionDiv.className = 'condition';
     conditionDiv.innerHTML = `
         <select name="column">
+            <option value="품목구분">품목구분</option>
+            <option value="업체명">업체명</option>
             <option value="제품명">제품명</option>
             <option value="주성분">주성분</option>
-            <option value="업체명">업체명</option>
-            <option value="첨가제">첨가제</option>  
-            <option value="허가일">허가일</option>
-            <option value="제조/수입">제조/수입</option>
-            <option value="모양">모양</option>
-            <option value="장축">장축</option>
-            <option value="단축">단축</option>
-            <option value="수입제조국">수입제조국</option>
-            <option value="주성분영문">주성분영문</option>
+            <option value="첨가제">첨가제</option>
+            <option value="상태">상태</option>
         </select>
         <input type="text" name="query" placeholder="Enter search term">
         <button type="button" onclick="addConditionWithOperator(this, 'AND')">AND +</button>
@@ -36,17 +33,12 @@ function addConditionWithOperator(button, operator) {
     conditionDiv.className = 'condition';
     conditionDiv.innerHTML = `
         <select name="column">
+            <option value="품목구분">품목구분</option>
+            <option value="업체명">업체명</option>
             <option value="제품명">제품명</option>
             <option value="주성분">주성분</option>
-            <option value="업체명">업체명</option>
-            <option value="첨가제">첨가제</option>  
-            <option value="허가일">허가일</option>
-            <option value="제조/수입">제조/수입</option>
-            <option value="모양">모양</option>
-            <option value="장축">장축</option>
-            <option value="단축">단축</option>
-            <option value="수입제조국">수입제조국</option>
-            <option value="주성분영문">주성분영문</option>
+            <option value="첨가제">첨가제</option>
+            <option value="상태">상태</option>
         </select>
         <input type="text" name="query" placeholder="Enter search term">
         <button type="button" onclick="addConditionWithOperator(this, 'AND')">AND +</button>
@@ -117,7 +109,9 @@ function submitSearch(event) {
     .then(response => response.text())
     .then(html => {
         document.getElementById('results').innerHTML = html;
-        highlightSearchTerms(params.getAll('query'));
+        const queries = formData.getAll('query');
+        const columns = formData.getAll('column');
+        highlightSearchTerms(queries, columns);
         makeColumnsResizable();
         setupColumnToggle();
     })
@@ -127,12 +121,21 @@ function submitSearch(event) {
     });
 }
 
-function highlightSearchTerms(terms) {
+function highlightSearchTerms(queries, columns) {
     const resultsDiv = document.getElementById('results');
-    terms.forEach(term => {
-        const regex = new RegExp(`(${term})`, 'gi');
-        resultsDiv.innerHTML = resultsDiv.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+    let innerHTML = resultsDiv.innerHTML;
+
+    queries.forEach((term, index) => {
+        const color = highlightColors[index % highlightColors.length];
+        const column = columns[index];
+        const regex = new RegExp(`(<td[^>]*data-column="${column}"[^>]*>)([^<]*${term}[^<]*)(<\/td>)`, 'gi');
+        
+        innerHTML = innerHTML.replace(regex, (match, p1, p2, p3) => {
+            return p1 + p2.replace(new RegExp(term, 'gi'), `<span class="highlight" style="background-color: ${color};">$&</span>`) + p3;
+        });
     });
+
+    resultsDiv.innerHTML = innerHTML;
 }
 
 function makeColumnsResizable() {
@@ -206,6 +209,7 @@ function setupColumnToggle() {
         col.appendChild(toggleButton);
     });
 }
+
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('searchForm').addEventListener('submit', submitSearch);
     document.querySelectorAll('#searchForm input[type="text"]').forEach(input => {

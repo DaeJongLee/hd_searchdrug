@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 import sqlite3
 import pandas as pd
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
@@ -46,16 +47,35 @@ def search():
     conn = get_db_connection()
     try:
         # SQL 쿼리 실행
-        df = pd.read_sql_query(f"SELECT * FROM drug_info WHERE {condition_str}", conn, params=params)
+        query = f"""
+        SELECT 품목구분, 업체명, 제품명, 주성분, 첨가제, 상태 
+        FROM drug_info 
+        WHERE {condition_str}
+        """
+        df = pd.read_sql_query(query, conn, params=params)
         if not df.empty:
-            results = df.to_html(classes='data')
+            # 데이터프레임을 HTML로 변환
+            df_html = df.to_html(classes='data', index=False, escape=False)
+
+            # data-column 속성 추가
+            soup = BeautifulSoup(df_html, 'html.parser')
+            for idx, row in enumerate(soup.find_all('tr')):
+                if idx == 0:  # 헤더 행
+                    for th in row.find_all('th'):
+                        th['data-column'] = th.get_text()
+                else:  # 데이터 행
+                    for col_idx, td in enumerate(row.find_all('td')):
+                        td['data-column'] = df.columns[col_idx]
+            df_html = str(soup)
+
+            results = df_html
         else:
             results = "No results found."
     except Exception as e:
-        results = str(e)
+        results = f"Error occurred: {e}"
     finally:
         conn.close()
-    
+
     return results
 
 if __name__ == '__main__':
