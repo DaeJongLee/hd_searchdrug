@@ -7,10 +7,9 @@ function addCondition() {
     conditionDiv.className = 'condition';
     conditionDiv.innerHTML = `
         <select name="column">
-            <option value="품목구분">품목구분</option>
-            <option value="업체명">업체명</option>
             <option value="제품명">제품명</option>
             <option value="주성분">주성분</option>
+            <option value="업체명">업체명</option>
             <option value="첨가제">첨가제</option>
             <option value="상태">상태</option>
         </select>
@@ -33,10 +32,10 @@ function addConditionWithOperator(button, operator) {
     conditionDiv.className = 'condition';
     conditionDiv.innerHTML = `
         <select name="column">
-            <option value="품목구분">품목구분</option>
-            <option value="업체명">업체명</option>
+            
             <option value="제품명">제품명</option>
             <option value="주성분">주성분</option>
+            <option value="업체명">업체명</option>
             <option value="첨가제">첨가제</option>
             <option value="상태">상태</option>
         </select>
