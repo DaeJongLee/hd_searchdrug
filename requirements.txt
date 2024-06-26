@@ -1,5 +1,6 @@
 appnope==0.1.4
 asttokens==2.4.1
+beautifulsoup4==4.12.3
 blinker==1.8.2
 click==8.1.7
 comm==0.2.2
@@ -35,6 +36,7 @@ python-dateutil==2.9.0.post0
 pytz==2024.1
 pyzmq==26.0.3
 six==1.16.0
+soupsieve==2.5
 stack-data==0.6.3
 tornado==6.4.1
 traitlets==5.14.3
